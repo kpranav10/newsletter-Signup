@@ -8,6 +8,7 @@ const request = require ("request");
 
 const https = require("https");
 
+require('dotenv').config();
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended:true}));
 app.get("/", function(req,res){
@@ -36,10 +37,10 @@ app.post("/", function(req,res){
   const url = "https://us14.api.mailchimp.com/3.0/lists/3f78b24d79";
   const options = {
     method: "POST",
-    auth: "john:df1bf85d9659afac293ec5210cb765a7-us14"
+    auth: "john:" +process.env.API_KEY
   };
   const request = https.request(url, options, function (response){
-
+    console.log(response.statusCode);
     if(response.statusCode === 200){
       res.sendFile(__dirname +"/success.html");
     }
